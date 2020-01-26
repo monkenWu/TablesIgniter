@@ -7,7 +7,7 @@
  * @package    CodeIgniter
  * @subpackage libraries
  * @category   library
- * @version    1.0
+ * @version    1.0.0
  * @author    monkenWu <610877102@mail.nknu.edu.tw>
  * @link      https://github.com/monkenWu/TablesIgniter
  *        
