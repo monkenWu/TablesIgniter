@@ -1,4 +1,4 @@
-<?php namespace App\Libraries;
+<?php namespace monken\Tablesigniter;
 /**
  * TablesIgniter
  *
@@ -13,10 +13,9 @@
  *        
  */
 
-use CodeIgniter\Database\ConnectionInterface;
 use Closure;
 
-class TablesIgniter{
+class Tablesigniter{
 
     protected $db;
     protected $builder;
@@ -24,7 +23,7 @@ class TablesIgniter{
     protected $defaultOrder = [];
     protected $searchLike = false;
 
-    public function __construct(ConnectionInterface &$db){
+    public function __construct(&$db){
         $this->db =& $db;
     }
 
