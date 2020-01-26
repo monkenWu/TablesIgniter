@@ -1,4 +1,4 @@
-<?php namespace monken\Tablesigniter;
+<?php namespace monken\TablesIgniter;
 /**
  * TablesIgniter
  *
@@ -15,7 +15,7 @@
 
 use Closure;
 
-class Tablesigniter{
+class TablesIgniter{
 
     protected $db;
     protected $builder;

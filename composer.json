@@ -1,5 +1,5 @@
 {
-    "name": "monken/tablesigniter",
+    "name": "monken/TablesIgniter",
     "description": "This library will help you use jQuery Datatables based on CodeIgniter4.",
     "type": "library",
     "keywords": [
@@ -19,7 +19,7 @@
     "license": "MIT",
     "autoload": {
 		"psr-4": {
-			"monken\\Tablesigniter\\": "s"
+			"monken\\TablesIgniter\\": "s"
 		}
 	}
 }
