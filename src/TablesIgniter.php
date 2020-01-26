@@ -1,4 +1,4 @@
-<?php namespace tablesigniter;
+<?php namespace monken;
 /**
  * TablesIgniter
  *
