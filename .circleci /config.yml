@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  branches:
+    only:
+      - doc
+  build:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:7.2.0-cli-stretch
+    steps:
+      - checkout
+      # - ls
+      # - pwd
+      # - scp script/start.sh
+      # - scp sourceCode
+      # - ssh SERVER_IP 'sh start.sh'
+      - run: echo "test and ok"
+      # - run: echo $SERVER_IP
