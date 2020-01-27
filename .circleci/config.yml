@@ -9,7 +9,6 @@ jobs:
       - image: circleci/php:7.2-apache-stretch-node-browsers
     steps:
       - checkout
-      - ls
       # - pwd
       # - scp script/start.sh
       # - scp sourceCode
