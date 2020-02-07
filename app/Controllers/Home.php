@@ -11,21 +11,26 @@ class Home extends BaseController{
 
 	public function firstTable(){
 		$model = new HomeModel();
-		$table = new TablesIgniter($model->db);
+		$table = new TablesIgniter();
 		$table->setTable($model->noticeTable())
 			  ->setOutput(["id","title","slug"]);
 		return $table->getDatatable();
 	}
 
-	public function useTable(){
+	public function tableSecPattern(){
 		$model = new HomeModel();
-		$table = new TablesIgniter($model->db);
+		$table = new TablesIgniter($model->initTable());
+		return $table->getDatatable();
+	}
+
+	public function fullTable(){
+		$model = new HomeModel();
+		$table = new TablesIgniter();
 		$table->setTable($model->noticeTable())
 			  ->setDefaultOrder("id","DESC")
 			  ->setSearch(["title","slug"])
-			  ->setOutput([$model->noticeButton(),
-						    "title",
-							"slug"]);
-		echo $table->getDatatable();
+			  ->setOrder([null,"title","slug"])
+			  ->setOutput([$model->button(),"title","slug"]);
+		return $table->getDatatable();
 	}
 }

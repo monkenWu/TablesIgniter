@@ -39,7 +39,6 @@
                 type:'POST'
             }
         });
-
     </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-tw">
+<html lang="zh-Hant-TW">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
@@ -24,6 +24,14 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -35,11 +43,16 @@
                 font-size: 3.5rem;
             }
         }
+
+        li{
+            margin-bottom : 1em;
+        }
     </style>
     <!-- Custom styles for this template -->
     <link href="https://bootstrap.hexschool.com/docs/4.2/examples/album/album.css" rel="stylesheet">
 </head>
 <body>
+
     <main role="main">
 
         <section class="jumbotron text-center">
@@ -50,13 +63,25 @@
                     快速地建置符合 server-side processing mode 規則的 API
                 </p>    
                 <p>
-                    <a href="#" class="btn btn-primary my-2">使用指南</a>
-                    <a href="https://github.com/monkenWu/TablesIgniter" target="_blank" class="btn btn-secondary my-2">Git儲存庫</a>
+                    <a href="https://github.com/monkenWu/TablesIgniter" target="_blank" class="btn btn-secondary my-2">造訪Git儲存庫</a>
+                </p>
+                <p>
+                    <div id="google_translate_element"></div>
                 </p>
             </div>
         </section>
 
         <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <?=view("tables/firstTable")?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="album bg-light pb-5">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -75,97 +100,11 @@
             </div>
         </div>
 
-        <div class="album bg-light">
+        <div class="album bg-light pb-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">快速開始</h5>
-                                <p class="card-text">建置最精簡的 DataTables</p>
-                        
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">程式碼</h5>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#ex-html-1" role="tab" aria-selected="true">HTML</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#ex-js-1" role="tab" aria-selected="false">JavaScript</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#ex-con-1" role="tab" aria-selected="false">Controller</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#ex-model-1" role="tab" aria-selected="false">Model</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="ex-html-1" role="tabpanel">
-                                        <pre><code class="html"><?=htmlentities(
-                                            <<<EOF
-                                            <table id="firstTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>id</th>
-                                                        <th>title</th>
-                                                        <th>slug</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                            EOF);
-                                        ?></code></pre>
-                                    </div>
-                                    <div class="tab-pane fade" id="ex-js-1" role="tabpanel">
-                                        <pre><code class="javascript"><?=htmlentities(
-                                            <<<EOF
-                                            $('#firstTable').DataTable({
-                                                "serverSide":true,
-                                                "ajax":{
-                                                    url:"<?=base_url('home/firstTable')?>",
-                                                    type:'POST'
-                                                }
-                                            });
-                                            EOF);
-                                        ?></code></pre>
-                                    </div>
-                                    <div class="tab-pane fade" id="ex-con-1" role="tabpanel">
-                                        <pre><code class="php"><?= htmlentities(
-                                        <<<EOF
-                                        public function firstTable(){
-                                            \$model = new HomeModel();
-                                            \$table = new TablesIgniter(\$model->db);
-                                            \$table->setTable(\$model->noticeTable())
-                                                ->setOutput(["id","title","slug"]);
-                                            return \$table->getDatatable();
-                                        }
-                                        EOF);
-                                        ?></code></pre>
-                                    </div>
-                                    <div class="tab-pane fade" id="ex-model-1" role="tabpanel" >
-                                        <pre><code class="php"><?= htmlentities(
-                                        <<<EOF
-                                        public \$db;
-                                        public function __construct(){
-                                            \$this->db = \Config\Database::connect();
-                                        }
-                                        public function noticeTable(){
-                                            \$closureFun =  function(&\$db){
-                                                return \$db->table("news");
-                                            };
-                                            return \$closureFun;
-                                        }
-                                        EOF);
-                                        ?></code></pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-12">
+                        <?=view("tables/fullTable")?>
                     </div>
                 </div>
             </div>
