@@ -1,6 +1,6 @@
 # TablesIgniter
 
-Tableslgniter is a library base on CodeIgniter4. It will help you use jQuery Datatables in server side mode.
+Tableslgniter is an addins base on CodeIgniter4. It will help you use jQuery Datatables in server side mode.
 
 TablesIgniter 基於 CodeIgniter4 。它將可以幫助你在 使用 server side mode 中使用 jQuery Datatables。 
 
