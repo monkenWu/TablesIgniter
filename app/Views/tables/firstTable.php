@@ -77,10 +77,10 @@
                     ?></code></pre>
                     <ol>
                         <li>
-                            呼叫 setTable() 方法必須傳入 <a href="https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html" target="_blank">Query Builder</a> 物件，在 DataTables 的資料串接上，TablesIgniter 倚賴這個物件所定義的資料庫查詢內容。這個物件通常會在 Model 宣告。
+                            呼叫 setTable() 方法必須傳入 <a href="https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html" target="_blank">Query Builder</a> 物件，TablesIgniter 倚賴這個物件所定義的資料庫查詢內容。這個物件通常會在 Model 宣告。
                         </li>
                         <li>
-                            呼叫 setOutput() 方法時必須傳入陣列，陣列的順序將會影響到 DataTables 所呈現資料的順序，字串的定義與 setTable() 所查詢的結果的欄位名稱必須相同。
+                            呼叫 setOutput() 方法必須傳入陣列，陣列的順序將會影響到 DataTables 所呈現資料的順序，字串的定義與 setTable() 所查詢的結果的欄位名稱必須相同。
                         </li>
                         <li>
                             呼叫 getDatatable() 將會獲得符合 jQuery DataTables 要求的 json 字串。

@@ -61,7 +61,11 @@
                 <p class="lead text-muted">
                     TablesIgniter 基於 CodeIgniter4 與 jQuery DataTables<br>
                     快速地建置符合 server-side processing mode 規則的 API
-                </p>    
+                </p>
+                <p class="lead text-muted">
+                    Tableslgniter is an addins base on CodeIgniter4.<br>
+                    It will help you use jQuery Datatables in server side mode.
+                </p>
                 <p>
                     <a href="https://github.com/monkenWu/TablesIgniter" target="_blank" class="btn btn-secondary my-2">造訪Git儲存庫</a>
                 </p>
