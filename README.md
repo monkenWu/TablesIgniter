@@ -5,7 +5,7 @@ Tableslgniter is an addins base on CodeIgniter4. It will help you use jQuery Dat
 TablesIgniter 基於 CodeIgniter4 。它將可以幫助你在 使用 server side mode 中使用 jQuery Datatables。 
 
 [Visit the sample website and read user guide.
-](https://tablesigniter.monken.tw/)（Sorry, the complete user guide is currently only have Chinese version. For English,we will add English version to complete user guide soon.）
+](https://tablesigniter.monken.tw/)（The complete user guide is currently only have Chinese version. For English,we will add English version to complete user guide soon.But you can use Google Translate to read the user guide first.）
 
 [造訪範例網站與使用指南
 ](https://tablesigniter.monken.tw/)
