@@ -75,7 +75,7 @@
                         \$model = new HomeModel();
                         \$table = new TablesIgniter();
                         \$table->setTable(\$model->noticeTable())
-                              ->setOutput(["id","title","slug"]);
+                              ->setOutput(["id","title","date"]);
                         return \$table->getDatatable();
                     }
                     EOF);
