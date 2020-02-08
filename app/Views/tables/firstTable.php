@@ -8,7 +8,7 @@
                     <tr>
                         <th>id</th>
                         <th>title</th>
-                        <th>slug</th>
+                        <th>date</th>
                     </tr>
                 </thead>
             </table>
@@ -41,7 +41,7 @@
                                 <tr>
                                     <th>id</th>
                                     <th>title</th>
-                                    <th>slug</th>
+                                    <th>date</th>
                                 </tr>
                             </thead>
                         </table>
@@ -52,6 +52,11 @@
                     <pre><code class="javascript"><?=htmlentities(
                         <<<EOF
                         $('#firstTable').DataTable({
+                            "aoColumnDefs": [{ 
+                                "bSortable": false,
+                                "aTargets": [ 0,1,2 ] 
+                            }],
+                            "order":[],
                             "serverSide":true,
                             "searching": false,
                             "lengthChange":false,
@@ -106,9 +111,9 @@
                     CREATE TABLE `news` (
                         `id` int(11) NOT NULL,
                         `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-                        `slug` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+                        `date` date NOT NULL,
                         `body` text COLLATE utf8_unicode_ci NOT NULL
-                    )
+                    ) 
                     EOF);
                     ?></code></pre>
                 </div>
@@ -119,6 +124,11 @@
 </div>
 <script>
     $('#firstTable').DataTable({
+        "aoColumnDefs": [{ 
+            "bSortable": false,
+            "aTargets": [ 0,1,2 ] 
+        }],
+        "order":[],
         "serverSide":true,
         "searching": false,
         "lengthChange":false,

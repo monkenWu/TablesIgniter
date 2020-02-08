@@ -8,7 +8,7 @@
                     <tr>
                         <th>action</th>
                         <th>title</th>
-                        <th>slug</th>
+                        <th>date</th>
                     </tr>
                 </thead>
             </table>
@@ -48,7 +48,7 @@
                                 <tr>
                                     <th>action</th>
                                     <th>title</th>
-                                    <th>slug</th>
+                                    <th>date</th>
                                 </tr>
                             </thead>
                         </table>
@@ -78,8 +78,9 @@
                         $('#fullTable').DataTable({
                             "aoColumnDefs": [{ 
                                 "bSortable": false,
-                                "aTargets": [ 0 ] 
+                                "aTargets": [ 0,1 ] 
                             }],
+                            "order":[],
                             "serverSide":true,
                             "ajax":{
                                 url:"<?=base_url('home/fullTable')?>",
@@ -101,9 +102,9 @@
                         \$table = new TablesIgniter();
                         \$table->setTable(\$model->noticeTable())
                               ->setDefaultOrder("id","DESC")
-                              ->setSearch(["title","slug"])
-                              ->setOrder([null,"title","slug"])
-                              ->setOutput([\$model->button(),"title","slug"]);
+                              ->setSearch(["title","date"])
+                              ->setOrder([null,null,"date"])
+                              ->setOutput([\$model->button(),"title","date"]);
                         return \$table->getDatatable();
                     }
                     EOF);
@@ -161,7 +162,7 @@
                     CREATE TABLE `news` (
                         `id` int(11) NOT NULL,
                         `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-                        `slug` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+                        `date` date NOT NULL,
                         `body` text COLLATE utf8_unicode_ci NOT NULL
                     )
                     EOF);
@@ -187,26 +188,26 @@
                     <pre><code class="php"><?= htmlentities(
                     <<<EOF
                     public function initTable(){
-                    \$builder = \$this->db->table("news");
-                    \$setting = [
-                        "setTable" => \$builder,
-                        "setDefaultOrder" => [
-                            ["id","DESC"],
-                            ["body","DESC"]
-                        ],
-                        "setSearch" => ["title","slug"],
-                        "setOrder"  => [null,"title","slug"],
-                        "setOutput" => [
-                            function(\$row){
-                                return <<<EOF
-                                    <button class="btn btn-outline-info" onclick="openInfo('{\$row["body"]}')"  data-toggle="modal" data-target="#exampleModal">info{\$row["id"]}</button>
-                                \EOF;
-                            },
-                            "title",
-                            "slug"
-                        ]
+                        \$builder = \$this->db->table("news");
+                        \$setting = [
+                            "setTable" => \$builder,
+                            "setDefaultOrder" => [
+                                ["id","DESC"],
+                                ["body","DESC"]
+                            ],
+                            "setSearch" => ["title","date"],
+                            "setOrder"  => [null,null,"date"],
+                            "setOutput" => [
+                                function(\$row){
+                                    return <<<EOF
+                                        <button class="btn btn-outline-info" onclick="openInfo('{\$row["body"]}')"  data-toggle="modal" data-target="#exampleModal">info{\$row["id"]}</button>
+                                    \EOF;
+                                },
+                                "title",
+                                "date"
+                            ]
+                        ];
                         return \$setting;
-                    ];
                     } 
                     EOF);
                     ?></code></pre>
@@ -247,7 +248,7 @@
     $('#fullTable').DataTable({
         "aoColumnDefs": [{ 
             "bSortable": false,
-            "aTargets": [ 0 ] 
+            "aTargets": [ 0,1 ] 
         }],
         "order":[],
         "serverSide":true,

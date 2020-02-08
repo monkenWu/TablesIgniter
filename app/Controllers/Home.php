@@ -13,7 +13,7 @@ class Home extends BaseController{
 		$model = new HomeModel();
 		$table = new TablesIgniter();
 		$table->setTable($model->noticeTable())
-			  ->setOutput(["id","title","slug"]);
+			  ->setOutput(["id","title","date"]);
 		return $table->getDatatable();
 	}
 
@@ -28,9 +28,9 @@ class Home extends BaseController{
 		$table = new TablesIgniter();
 		$table->setTable($model->noticeTable())
 			  ->setDefaultOrder("id","DESC")
-			  ->setSearch(["title","slug"])
-			  ->setOrder([null,"title","slug"])
-			  ->setOutput([$model->button(),"title","slug"]);
+			  ->setSearch(["title","date"])
+			  ->setOrder([null,null,"date"])
+			  ->setOutput([$model->button(),"title","date"]);
 		return $table->getDatatable();
 	}
 }

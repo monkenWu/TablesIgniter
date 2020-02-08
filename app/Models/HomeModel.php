@@ -32,8 +32,8 @@ class HomeModel extends Model {
                 ["id","DESC"],
                 ["body","DESC"]
             ],
-            "setSearch" => ["title","slug"],
-            "setOrder"  => [null,"title","slug"],
+            "setSearch" => ["title","date"],
+            "setOrder"  => [null,null,"date"],
             "setOutput" => [
                 function($row){
                     return <<<EOF
@@ -41,7 +41,7 @@ class HomeModel extends Model {
                     EOF;
                 },
                 "title",
-                "slug"
+                "date"
             ]
         ];
         return $setting;
