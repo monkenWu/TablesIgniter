@@ -38,7 +38,7 @@ use monken\TablesIgniter;
         <tr>
             <th>id</th>
             <th>title</th>
-            <th>slug</th>
+            <th>date</th>
         </tr>
     </thead>
 </table>
@@ -49,7 +49,14 @@ use monken\TablesIgniter;
 
 ```
 $('#firstTable').DataTable({
+    "aoColumnDefs": [{ 
+        "bSortable": false,
+        "aTargets": [ 0,1,2 ] 
+    }],
+    "order":[],
     "serverSide":true,
+    "searching": false,
+    "lengthChange":false,
     "ajax":{
         url:"<?=base_url('home/firstTable')?>",
         type:'POST'
@@ -64,7 +71,7 @@ public function firstTable(){
     $model = new HomeModel();
     $table = new TablesIgniter();
     $table->setTable($model->noticeTable())
-          ->setOutput(["id","title","slug"]);
+          ->setOutput(["id","title","date"]);
     return $table->getDatatable();
 }
 ```
