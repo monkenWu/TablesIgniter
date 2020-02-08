@@ -11,6 +11,10 @@ TablesIgniter 基於 CodeIgniter4 。它將可以幫助你在 使用 server side
 ](https://tablesigniter.monken.tw/)
 ## Install
 
+### Prerequisites
+1. CodeIgniter Framework 4.*
+2. Composer
+
 ### Composer Install
 
 ```
