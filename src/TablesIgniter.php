@@ -176,7 +176,7 @@ class TablesIgniter{
     /**
      * 取得完整的Datatable Json字串
      */
-    public function getDatatable(){
+    public function getDatatable($isJson=true){
         if($result = $this->getQuery()){
             $data = array();
             foreach ($result->getResult('array') as $row){
@@ -188,7 +188,7 @@ class TablesIgniter{
                 "recordsFiltered" => $this->getFiltered(),
                 "data" => $data
             );
-            return json_encode($output);
+            return $isJson ? json_encode($output) : $output;
         }
         return $data;
     }
