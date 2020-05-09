@@ -2,13 +2,16 @@
 
 Tableslgniter is an addins base on CodeIgniter4. It will help you use jQuery Datatables in server side mode.
 
+If you want to get CodeIgniter3 version of Tableslgniter you can go to this [git repository](https://github.com/monkenWu/TablesIgniter_CI3).
+
+[Visit the sample website and read user guide.](https://tablesigniter.monken.tw/)
+
 TablesIgniter 基於 CodeIgniter4 。它將可以幫助你在 使用 server side mode 中使用 jQuery Datatables。 
 
-[Visit the sample website and read user guide.
-](https://tablesigniter.monken.tw/)（The complete user guide is currently only have Chinese version. For English,we will add English version to complete user guide soon.But you can use Google Translate to read the user guide first.）
+如果你希望取得 CodeIgniter3 版本的 Tableslgniter 你可以前往這個 [git儲存庫](https://github.com/monkenWu/TablesIgniter_CI3) 。
 
-[造訪範例網站與使用指南
-](https://tablesigniter.monken.tw/)
+[造訪範例網站與使用指南](https://tablesigniter.monken.tw/)
+
 ## Install
 
 ### Prerequisites
