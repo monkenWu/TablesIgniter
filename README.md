@@ -1,5 +1,7 @@
 # TablesIgniter
 
+[![Latest Stable Version](https://poser.pugx.org/monken/tablesigniter/v)](//packagist.org/packages/monken/tablesigniter) [![Total Downloads](https://poser.pugx.org/monken/tablesigniter/downloads)](//packagist.org/packages/monken/tablesigniter) [![License](https://poser.pugx.org/monken/tablesigniter/license)](//packagist.org/packages/monken/tablesigniter)
+
 Tableslgniter is an addins base on CodeIgniter4. It will help you use jQuery Datatables in server side mode.
 
 If you want to get CodeIgniter3 version of Tableslgniter you can go to this [git repository](https://github.com/monkenWu/TablesIgniter_CI3).
