@@ -87,7 +87,6 @@
                                 type:'POST'
                             }
                         });
-                    
                         function openInfo(body){
                             $('.modal-body').html(body);
                         }
@@ -138,7 +137,6 @@
                         \$builder = \$this->db->table("news");
                         return \$builder;
                     }
-                
                     public function button(){
                         \$closureFun = function(\$row){
                             return <<<EOF
