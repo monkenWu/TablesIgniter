@@ -1,135 +1,190 @@
 <?php namespace monken;
+
 /**
  * TablesIgniter
  *
- * TablesIgniter 基於 CodeIgniter4 。它將可以幫助你在 使用 server side mode 中使用 jQuery Datatables。 
  * TablesIgniter based on CodeIgniter4. This  library will help you use jQuery Datatables in server side mode.
  * @package    CodeIgniter4
  * @subpackage libraries
  * @category   library
- * @version    1.1.0
+ * @version    1.2.0
  * @author    monkenWu <610877102@mail.nknu.edu.tw>
  * @link      https://github.com/monkenWu/TablesIgniter
- *        
+ *
  */
 
-use Closure;
+use \CodeIgniter\Database\BaseBuilder;
 
-class TablesIgniter{
+class TablesIgniter
+{
 
     protected $builder;
     protected $outputColumn;
     protected $defaultOrder = [];
     protected $searchLike = [];
     protected $order = [];
+    protected $dataTables;
 
-    public function __construct(array $init = []){
-        if(!empty($init)){
-            if(isset($init["setTable"]))
+    public function __construct(array $init = [])
+    {
+        if (!empty($init)) {
+            if (isset($init["setTable"])) {
                 $this->setTable($init["setTable"]);
-            if(isset($init["setOutput"]))
+            }
+
+            if (isset($init["setOutput"])) {
                 $this->setOutput($init["setOutput"]);
-            if(isset($init["setDefaultOrder"])){
+            }
+
+            if (isset($init["setDefaultOrder"])) {
                 foreach ($init["setDefaultOrder"] as $value) {
-                    $this->setDefaultOrder($value[0],$value[1]);
+                    $this->setDefaultOrder($value[0], $value[1]);
                 }
             }
-            if(isset($init["setSearch"]))
+            if (isset($init["setSearch"])) {
                 $this->setSearch($init["setSearch"]);
-            if(isset($init["setOrder"]))
+            }
+
+            if (isset($init["setOrder"])) {
                 $this->setOrder($init["setOrder"]);
+            }
+
+        }
+        $request = \Config\Services::request();
+        if ($request->getPost("draw")) {
+            $this->dataTables = $request->getPost();
+        } else if ($request->getGet("draw")) {
+            $this->dataTables = $request->getGet();
+        } else {
+            throw new \Exception("Must be requested by jQuery DataTables.", 1);
         }
     }
 
     /**
-     * 設定欄位
+     * Pass the BaseBuilder object.
+     *
+     * @param \CodeIgniter\Database\BaseBuilder $builder
+     * @return \monken\TablesIgniter
      */
-    public function setTable($builder){
+    public function setTable(BaseBuilder $builder)
+    {
         $this->builder = clone $builder;
         return $this;
     }
 
     /**
-     * 設定參與搜索欄位
+     * Set the Database field to participate in the search.
+     *
+     * @param array $like An array of strings.
+     * @return \monken\TablesIgniter
      */
-    public function setSearch(array $like){
+    public function setSearch(array $like)
+    {
         $this->searchLike = $like;
         return $this;
     }
 
     /**
-     * 設定排序項目
+     * Set the gk4u field to participate in the order.Must be the same arrangement as the "setOutput" field.
+     *
+     * @param array $order An array of strings.
+     * @return \monken\TablesIgniter
      */
-    public function setOrder(array $order){
+    public function setOrder(array $order)
+    {
         $this->order = $order;
         return $this;
     }
 
     /**
-     * 設定預設排序項目
+     * Set the field to be sorted and the sorting method by default.
+     *
+     * @param string $item field name
+     * @param string $type sorting method
+     * @return \monken\TablesIgniter
      */
-    public function setDefaultOrder($item,$type="ASC"){
+    public function setDefaultOrder(string $item, string $type = "ASC")
+    {
         $this->defaultOrder[] = array($item, $type);
         return $this;
     }
 
     /**
-     * 設定實際輸出的序列
+     * Set the actual output sequence. A string array composed of field names.
+     *
+     * @param array $column An array of strings.
+     * @return \monken\TablesIgniter
      */
-    public function setOutput(array $column){
+    public function setOutput(array $column)
+    {
         $this->outputColumn = $column;
         return $this;
     }
 
-    private function getBuilder(){
+    /**
+     * Get a clone of the builder object.
+     *
+     * @return \CodeIgniter\Database\BaseBuilder
+     */
+    private function getBuilder()
+    {
         return clone $this->builder;
     }
 
     /**
-     * 搜索總筆數
+     * Get the number of searches.
+     *
+     * @return int
      */
-    private function getFiltered(){
+    private function getFiltered()
+    {
         $bui = $this->extraConfig($this->getBuilder());
         $query = $bui->countAllResults();
-        return $query; 
-    }
-
-    /**
-     * 總筆數
-     */
-    private function getTotal(){
-        $bui = $this->getBuilder();
-        $query = $bui->countAllResults(); 
-        return $query;  
-    }
-
-    /**
-     * 執行查詢
-     * 在此停止ci->db類別紀錄規則
-     * @return  array
-     */
-    private function getQuery(){
-        $bui = $this->extraConfig($this->getBuilder());
-        if(isset($_POST["length"])){
-            if($_POST["length"] != -1) {  
-                $bui->limit($_POST['length'], $_POST['start']);
-            }
-        }
-        //print_r($bui);
-        $query = $bui->get();
-        //print_r($this->getBuilder());
         return $query;
     }
 
     /**
-     * 合成每列資料的內容。
+     * Get the total number of data.
+     *
+     * @return void
      */
-    private function getOutputData($row){
+    private function getTotal()
+    {
+        $bui = $this->getBuilder();
+        $query = $bui->countAllResults();
+        return $query;
+    }
+
+    /**
+     * Execute query
+     *
+     * @return \CodeIgniter\Database\ResultInterface
+     */
+    private function getQuery()
+    {
+        $bui = $this->extraConfig($this->getBuilder());
+        if (isset($this->dataTables["length"])) {
+            if ($this->dataTables["length"] != -1) {
+                $bui->limit($this->dataTables['length'], $this->dataTables['start']);
+            }
+        }
+        $query = $bui->get();
+        return $query;
+    }
+
+    /**
+     * Synthesize the content of each row of data.
+     *
+     * @param array $row
+     * @return array
+     */
+    private function getOutputData($row)
+    {
         $subArray = array();
         foreach ($this->outputColumn as $colKey => $data) {
-            if(gettype($data) != "string"){
+            if (gettype($data) != "string") {
                 $subArray[] = $data($row);
-            }else{
+            } else {
                 $subArray[] = $row[$data];
             }
         }
@@ -137,40 +192,46 @@ class TablesIgniter{
     }
 
     /**
-     * 查詢是否有排序或搜索的要求
+     * Determine whether other sorting or searching is needed.
+     *
+     * @param \CodeIgniter\Database\BaseBuilder $bui
+     * @return \CodeIgniter\Database\BaseBuilder
      */
-    private function extraConfig($bui){
-        if(!empty($_POST["search"]["value"])){  
-            foreach ($this->searchLike as  $key => $field) {
-                if($key == 0){
-                    $bui->like($field,$_POST["search"]["value"]);
-                }else{
-                    $bui->orLike($field,$_POST["search"]["value"]);
+    private function extraConfig($bui)
+    {
+        if (!empty($this->dataTables["search"]["value"])) {
+            $bui->groupStart();
+            foreach ($this->searchLike as $key => $field) {
+                if ($key == 0) {
+                    $bui->like($field, $this->dataTables["search"]["value"]);
+                } else {
+                    $bui->orLike($field, $this->dataTables["search"]["value"]);
                 }
             }
+            $bui->groupEnd();
         }
-        if(isset($_POST["order"])){
-            if(!empty($this->order)){
-                if($this->order[$_POST['order']['0']['column']] != null){
-                    $bui->orderby($this->order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);  
-                }else{
-                    if(count($this->defaultOrder)!=0){
+        if (isset($this->dataTables["order"])) {
+            if (!empty($this->order)) {
+                if ($this->order[$this->dataTables['order']['0']['column']] != null) {
+                    $bui->orderby($this->order[$this->dataTables['order']['0']['column']], $this->dataTables['order']['0']['dir']);
+                } else {
+                    if (count($this->defaultOrder) != 0) {
                         foreach ($this->defaultOrder as $value) {
-                            $bui->orderby($value[0], $value[1]); 
+                            $bui->orderby($value[0], $value[1]);
                         }
                     }
                 }
-            }else{
-                if(count($this->defaultOrder)!=0){
+            } else {
+                if (count($this->defaultOrder) != 0) {
                     foreach ($this->defaultOrder as $value) {
-                        $bui->orderby($value[0], $value[1]); 
+                        $bui->orderby($value[0], $value[1]);
                     }
                 }
             }
-        }else{
-            if(count($this->defaultOrder)!=0){
+        } else {
+            if (count($this->defaultOrder) != 0) {
                 foreach ($this->defaultOrder as $value) {
-                    $bui->orderby($value[0], $value[1]); 
+                    $bui->orderby($value[0], $value[1]);
                 }
             }
         }
@@ -178,19 +239,23 @@ class TablesIgniter{
     }
 
     /**
-     * 取得完整的Datatable Json字串
+     * Get the complete Datatable Json string or data array.
+     *
+     * @param boolean $isJson return the json string.
+     * @return string|array
      */
-    public function getDatatable($isJson=true){
-        if($result = $this->getQuery()){
+    public function getDatatable($isJson = true)
+    {
+        if ($result = $this->getQuery()) {
             $data = array();
-            foreach ($result->getResult('array') as $row){
+            foreach ($result->getResult('array') as $row) {
                 $data[] = $this->getOutputData($row);
             }
             $output = array(
-                "draw" => (int)$_POST["draw"] ?? -1,
+                "draw" => (int) $this->dataTables["draw"] ?? -1,
                 "recordsTotal" => $this->getTotal(),
                 "recordsFiltered" => $this->getFiltered(),
-                "data" => $data
+                "data" => $data,
             );
             return $isJson ? json_encode($output) : $output;
         }
