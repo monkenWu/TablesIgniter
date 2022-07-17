@@ -1,4 +1,4 @@
-<?php namespace monken;
+<?php namespace ricv;
 
 /**
  * TablesIgniter
@@ -7,26 +7,28 @@
  * @package    CodeIgniter4
  * @subpackage libraries
  * @category   library
- * @version    1.2.0
- * @author    monkenWu <610877102@mail.nknu.edu.tw>
- * @link      https://github.com/monkenWu/TablesIgniter
+ * @version    1.2.2
+ * @author    rcarhuaricra <ronald@grupocarhua.com>
+ * @link      https://github.com/rcarhuaricra/TablesIgniter
  *
  */
 
 use \CodeIgniter\Database\BaseBuilder;
 
-class TablesIgniter
+class RicvDataTable
 {
 
     protected $builder;
     protected $outputColumn;
     protected $defaultOrder = [];
     protected $searchLike = [];
+    protected $searchFiltros = [];
     protected $order = [];
     protected $dataTables;
 
     public function __construct(array $init = [])
     {
+
         if (!empty($init)) {
             if (isset($init["setTable"])) {
                 $this->setTable($init["setTable"]);
@@ -40,9 +42,15 @@ class TablesIgniter
                 foreach ($init["setDefaultOrder"] as $value) {
                     $this->setDefaultOrder($value[0], $value[1]);
                 }
+            }else{
+                ver($request->getPost());exit;
             }
             if (isset($init["setSearch"])) {
                 $this->setSearch($init["setSearch"]);
+            }
+
+            if (isset($init["setFilter"])) {
+                $this->setFilter($init["setFilter"]);
             }
 
             if (isset($init["setOrder"])) {
@@ -56,7 +64,8 @@ class TablesIgniter
         } else if ($request->getGet("draw")) {
             $this->dataTables = $request->getGet();
         } else {
-            throw new \Exception("Must be requested by jQuery DataTables.", 1);
+            $this->dataTables = $request->getPost();
+            // throw new \Exception("Must be requested by jQuery DataTables.", 1);
         }
     }
 
@@ -82,6 +91,12 @@ class TablesIgniter
     {
         $this->searchLike = $like;
         return $this;
+    }
+
+    public function setFilter($datos){
+        $this->searchFiltros = $datos;
+        return $this;
+
     }
 
     /**
@@ -178,14 +193,18 @@ class TablesIgniter
      * @param array $row
      * @return array
      */
-    private function getOutputData($row)
+    private function getOutputData($row, $name = false)
     {
         $subArray = array();
         foreach ($this->outputColumn as $colKey => $data) {
-            if (gettype($data) != "string") {
-                $subArray[] = $data($row);
-            } else {
-                $subArray[] = $row[$data];
+            if($name == 'name'){
+                $subArray[$data] = $row->$data;
+            }else{
+                if (gettype($data) != "string") {
+                    $subArray[] = $data($row);
+                } else {
+                    $subArray[] = $row[$data];
+                }
             }
         }
         return $subArray;
@@ -199,6 +218,31 @@ class TablesIgniter
      */
     private function extraConfig($bui)
     {
+        
+        if($this->searchLike){
+            $bui->groupStart();
+            foreach ($this->searchLike as $key => $v) {
+                if(is_array($v)){
+                    $bui->orLike($key, $v);
+                }else{
+                    $bui->orLike($key, $v);
+                }
+            }
+            $bui->groupEnd();
+        }
+
+        if($this->searchFiltros){
+            $bui->groupStart();
+            foreach ($this->searchFiltros as $key => $value) {
+                if(is_array($value)){
+                    $bui->whereIn($key, $value);
+                }else{
+                    $bui->where($key, $value);
+                }
+            }
+            $bui->groupEnd();
+        }
+
         if (!empty($this->dataTables["search"]["value"])) {
             $bui->groupStart();
             foreach ($this->searchLike as $key => $field) {
@@ -244,15 +288,25 @@ class TablesIgniter
      * @param boolean $isJson return the json string.
      * @return string|array
      */
-    public function getDatatable($isJson = true)
+    public function getDatatable($name = false, $isJson = true)
     {
         if ($result = $this->getQuery()) {
             $data = array();
-            foreach ($result->getResult('array') as $row) {
-                $data[] = $this->getOutputData($row);
+            foreach ($result->getResult() as $key => $row) {
+                if($name=='name'){
+                    $data[] = $this->getOutputData($row, 'name');
+                }else{
+                    $data[] = $this->getOutputData($row);
+                }
+            }
+
+            if(isset($this->dataTables["draw"])){
+                $draw = (int) $this->dataTables["draw"] ?? -1;
+            }else{
+                $draw = -1;
             }
             $output = array(
-                "draw" => (int) $this->dataTables["draw"] ?? -1,
+                "draw" => $draw,
                 "recordsTotal" => $this->getTotal(),
                 "recordsFiltered" => $this->getFiltered(),
                 "data" => $data,
