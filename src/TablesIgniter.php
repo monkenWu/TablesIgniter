@@ -7,10 +7,9 @@
  * @package    CodeIgniter4
  * @subpackage libraries
  * @category   library
- * @version    1.2.2
+ * @version    1.3.0
  * @author    rcarhuaricra <ronald@grupocarhua.com>
  * @link      https://github.com/rcarhuaricra/TablesIgniter
- *
  */
 
 use \CodeIgniter\Database\BaseBuilder;
