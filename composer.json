@@ -1,5 +1,5 @@
 {
-    "name": "ricv/tablesigniter",
+    "name": "ricv/tablesigniterricv",
     "description": "This library will help you use jQuery Datatables based on CodeIgniter4.",
     "type": "library",
     "keywords": [
