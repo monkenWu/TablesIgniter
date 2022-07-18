@@ -16,7 +16,6 @@ use \CodeIgniter\Database\BaseBuilder;
 
 class RicvDataTable
 {
-
     protected $builder;
     protected $outputColumn;
     protected $defaultOrder = [];
